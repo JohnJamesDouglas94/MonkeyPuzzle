@@ -212,8 +212,8 @@ function dragNode(d) {
 	d.y = d3.event.y;
 
 	// Containment function for nodes to prevent them being dragged off screen
-	// Scheme nodes are squares rotated 45deg - calculate the offset the make the node appear fully inside the boundary(w)
-	var schemeOffset = Math.sqrt((Math.pow((nodeSchemeSize/2), 2) + Math.pow((nodeSchemeSize/2), 2)));
+	// Scheme nodes are squares rotated 45deg - calculate the offset the make the node appear fully inside the boundary(w) - add 1 to this calculation to account for the border
+	var schemeOffset = Math.sqrt((Math.pow((nodeSchemeSize/2), 2) + Math.pow((nodeSchemeSize/2), 2))) + 1;
 	if(d.type == "scheme") {
 		if(d3.event.x >= (w - schemeOffset)) {
 			d.x = (w - schemeOffset);
@@ -228,18 +228,20 @@ function dragNode(d) {
 			d.y = schemeOffset;
 		}
 	}
+	// Take the nodeRadius and increment it by 1 to account for the border
+	var nodeOffset = nodeRadius + 1;
 	if(d.type == "text") {
-		if(d3.event.x >= (w - nodeRadius)) {
-			d.x = (w - nodeRadius);
+		if(d3.event.x >= (w - nodeOffset)) {
+			d.x = (w - nodeOffset);
 		}
-		if(d3.event.y >= (h - nodeRadius)) {
-			d.y = (h - nodeRadius);
+		if(d3.event.y >= (h - nodeOffset)) {
+			d.y = (h - nodeOffset);
 		}
-		if(d3.event.x <= (0 + nodeRadius)) {
-			d.x = nodeRadius;
+		if(d3.event.x <= (0 + nodeOffset)) {
+			d.x = nodeOffset;
 		}
-		if(d3.event.y <= (0 + nodeRadius)) {
-			d.y = nodeRadius;
+		if(d3.event.y <= (0 + nodeOffset)) {
+			d.y = nodeOffset;
 		}
 	}	
 
