@@ -87,7 +87,7 @@ function createSVG() {
 	defs.append("marker")
 		.attr("id","arrow-active")
 		.classed("svg-marker-arrow-active", true)
-		.attr("refX", 12)
+		.attr("refX", 11)
 		.attr("refY", 3)
 		.attr("markerWidth", 10)
 		.attr("markerHeight", 10)
