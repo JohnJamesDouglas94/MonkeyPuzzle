@@ -1,15 +1,11 @@
 // The radius of the circle text nodes
-var nodeRadius = 14;
+var nodeRadius = 12;
 // Circle node offset for the id text
 var nodeIdOffset = 4;
 // Size (width and height) of scheme nodes
-var nodeSchemeSize = 24;
+var nodeSchemeSize = 22;
 // Offset for scheme nodes
-var nodeSchemeOffset = 12;
-// X offset for the scheme nodes
-var nodeSchemeIdOffsetX = 4;
-// Y offset for the scheme nodes
-var nodeSchemeIdOffsetY = 22;
+var nodeSchemeOffset = 11;
 // Offset for the text overlays
 var nodeTextBoxOffset = 20;
 // If a text overlay is open (active)
@@ -24,7 +20,7 @@ var dragging = false;
 var editText = false;
 // X and Y offset  for adding nodes
 var addNodeOffset = 0;
-// Increment for increasing the distance a node moves
+// Increment for increasing the distance a node moves when added in the centre of the screen
 var addNodeIncrement = 20;
 
 // The object holding the existing visualisation data
@@ -65,7 +61,7 @@ function createSVG() {
 	defs.append("marker")
 		.attr("id","arrow")
 		.classed("svg-marker-arrow", true)
-		.attr("refX", 12)
+		.attr("refX", 11)
 		.attr("refY", 3)
 		.attr("markerWidth", 10)
 		.attr("markerHeight", 10)
@@ -532,7 +528,7 @@ function addNode(type) {
 		newNode.x = nodeX + addNodeOffset;
 		newNode.y = nodeY + addNodeOffset;
 	} else {
-		// Set the new node to appear at the center of the svg
+		// Set the new node to appear at the centre of the svg
     	newNode.x = Number(nodeX);
     	newNode.y = Number(nodeY);
 	}
