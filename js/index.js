@@ -89,24 +89,14 @@ function genRandColor() {
 }
 
 function testHighlight() {
-	//highlightRange.push([90,90]);
-	//console.log(highlightRange[0]);
-	//console.log(highlightRange[1]);
-	/*
-	console.log(JSON.stringify(highlightRange));
-	$("#txta-source-1").highlightTextarea({
-		//color: highlightColor,
-		//ranges: highlightRange
-		ranges: highlightRange
-	});
-	*/
 	$("#txta-source-1").highlightWithinTextarea(onInputArray);
 	//The function call above locks (doesnt actually lock but makes the text uneditable) the tab - update the icon here
 	lockTab();
 }
 
 function test() {
-	console.log("hwt-content="+$(".hwt-content").val());
+	console.log("current tab text="+$("#txta-source-"+activeTab).val());
+	//console.log("hwt-content="+$(".hwt-content").val());
 }
 
 function removeLastRangeElement() {
