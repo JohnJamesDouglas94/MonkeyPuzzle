@@ -24,9 +24,17 @@ var addNodeOffset = 0;
 var addNodeIncrement = 20;
 
 // The object holding the existing visualisation data
+/*
 var data = {
 	nodes: [{id: 0, x: 200, y: 400, text: "lorem", type:"text"},{id: 1, x: 400, y: 400, text: "ipsum", type:"scheme"},{id: 2, x: 400, y: 200, text: "dolor", type:"text"},{id: 3, x: 600, y: 400, text: "sit", type:"scheme"},{id: 4, x: 400, y: 600, text: "amet", type:"text"}],
 	links: [{source: {id: 0, x: 200, y: 400, text: "lorem", type:"text"}, target: {id: 1, x: 400, y: 400, text: "ipsum", type:"scheme"}},{source:{id: 2, x: 400, y: 200, text: "dolor", type:"text"},target:{id: 3, x: 600, y: 400, text: "sit", type:"scheme"}}],
+	tabs: [{tab: 1, text: ""}, {tab: 2, text: ""}, {tab: 3, text: ""}, {tab: 4, text: ""}, {tab: 5, text: ""}, {tab: 6, text: ""}, {tab: 7, text: ""}, {tab: 8, text: ""}, {tab: 9, text: ""}, {tab: 10, text: ""},],
+	currentNodeID: 0
+};
+*/
+var data = {
+	nodes: [],
+	links: [],
 	tabs: [{tab: 1, text: ""}, {tab: 2, text: ""}, {tab: 3, text: ""}, {tab: 4, text: ""}, {tab: 5, text: ""}, {tab: 6, text: ""}, {tab: 7, text: ""}, {tab: 8, text: ""}, {tab: 9, text: ""}, {tab: 10, text: ""},],
 	currentNodeID: 0
 };
@@ -431,7 +439,7 @@ function setTextRow(id) {
 	var element = data.nodes.filter(function(n) {
 		return (n.id == Number(id));
 	});
-	$("#txta-node-text").val(element[0].text);
+	$("#txta-node-text").val(element[0].displayText);
 }
 
 function clearTextRow() {
@@ -452,7 +460,8 @@ function showNodeTextOverlay(id, showAll) {
 			.classed("svg-overlay-text-text", function(d) { return data.nodes[id].type == "text"; })
 			.classed("svg-overlay-text-scheme", function(d) { return data.nodes[id].type == "scheme"; })
 			.attr("dy","0.35em")
-			.text(function() { return data.nodes[id].text })
+			//.text(function() { return data.nodes[id].text })
+			.text(function() { return data.nodes[id].displayText })
 			.attr("x", function() { return data.nodes[id].x + nodeTextBoxOffset; })
 			.attr("y", function() { return data.nodes[id].y + nodeTextBoxOffset; });
 					
@@ -541,34 +550,27 @@ function addNode(type) {
     var start = textaSource.selectionStart;
     var end = textaSource.selectionEnd;
 	var selectedText = textaSource.value.substring(start,end);
-	/*
-	// START OF HIGHLIGHTING
-	console.log("start="+start);
-	console.log("end="+end);
-	//var newHighlightElement = [start,end];
-	var newHighlightElement = {};
 
-	newHighlightElement.color = genRandColor();
-	newHighlightElement.start = start;
-	newHighlightElement.length = (end - start);
+	// Store the start end end value of the text
+	newNode.start = start;
+	newNode.end = end;
 
-	highlightRange.push(newHighlightElement);
 
-	console.log("newHighlightElement="+JSON.stringify(newHighlightElement));
+	var range = [start, end];
+	console.log("range="+JSON.stringify(range));
+	highlightRange.push(range);
+	console.log("highlightRange="+JSON.stringify(highlightRange));
+	$("#txta-source-1").highlightWithinTextarea(onInputArray);
 
-	//$("#txta-source-1").highlightTextarea({
-		//color: highlightColor,
-		//ranges: highlightRange
-	//});
-	// END OF HIGHLIGHTING
-	*/
 	var missingText = $("#txta-missing").val();
 	
 	// If there is no selected text - show error
 	if(selectedText != "") {
 		newNode.text = selectedText;
+		newNode.displayText = selectedText;
 	} else if(type == 3 && missingText != "") {
 		newNode.text = missingText;
+		newNode.displayText = missingText;
 	} else {
 		// Show modal 1
 		showModal(1);
@@ -896,8 +898,8 @@ function editNodeText() {
 	if(selectedElement != null && editText == true) {
 		var id = selectedElement.attr("id");
 
-		data.nodes[id].text = $("#txta-node-text").val();
-		console.log("new node["+id+"] text="+data.nodes[id].text);
+		data.nodes[id].displayText = $("#txta-node-text").val();
+		console.log("new node["+id+"] displayText="+data.nodes[id].displayText);
 
 		// Update the text row text
 		setTextRow(id);
@@ -914,14 +916,4 @@ function editNodeText() {
 
 function updateTabData() {
 
-}
-
-function changeNode0Text() {
-	var newText = "Phasellus a congue purus. Vestibulum fringilla lectus ac massa volutpat cursus. Donec ac eleifendtortor, et blandit erat. Quisque a consequat ligula,"
-				+ " non tincidunt mauris. Quisque tincidunt ultrices tortor, a venenatis sapien facilisis sed. Aliquam nisl elit, tempor atfeugiat non, tempus quis enim."
-				+ " Donec cursus tempus augue, vitae dapibus sem volutpat eu. Vivamus dolor sapien, porttitor fermentum tortor at, placerat malesuada sem. Sed vitae enim"
-				+ " scelerisque,fringilla urna sed, tempor turpis. Fusce ac molestie dui, ut lobortis libero. Maecenas leo tellus, tempus id dictum sed, facilisis quis augue."
-				+ " Integer at ullamcorper enim.Sed viverra tortor non urna hendrerit euismod. In magna ligula, faucibus at lobortis at, interdum a turpis. Maecenas laoreet lobortis"
-				+ " elit, at commodo metus congue quis. Integerin egestas diam. In at velit ut lorem feugiat pulvinar in vestibulum leo.";
-	data.nodes[0] = newText;
 }

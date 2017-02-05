@@ -6,7 +6,8 @@ var activeTab = 1;
 var maxTabs = 10;
 var sourceMaxWidth = 30;
 var sourceIncrement = 5;
-var highlightRange = [[100, 200], [350, 400]];
+//var highlightRange = [[100, 200], [350, 400]];
+var highlightRange = [];
 //var highlightRange = [[0,80],[656,716]];
 var highlightColor = "yellow";
 var wasUnlocked = null;
@@ -102,6 +103,10 @@ function test() {
 function removeLastRangeElement() {
 	highlightRange.pop();
 	console.log("highlightRange="+JSON.stringify(highlightRange));
+}
+
+function removeHighlight() {
+	$("#txta-source-"+activeTab).data('hwt').destroy();
 }
 
 function onInputArray(input) {
