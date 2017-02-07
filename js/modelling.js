@@ -513,11 +513,73 @@ function showAllTextOverlay() {
 	selectedElement = null;
 }
 
-function addNode(type) {
+function addNode(type,schemeName) {
 	var svg = d3.select("svg");
-	
+
 	var newNode = {};
     newNode.id = Number(data.currentNodeID);
+
+		// Based on the parameter to this function the type of node changes - set the type here
+	switch(type) {
+		// Text node
+		case 1:
+			// If the node request is a text node and has text from a source tab - set node type and store the text selection range in the node object 
+			newNode.type = "text";
+
+			// Get selection in the source textarea
+			var textaSource = document.getElementById("txta-source-"+activeTab);
+
+			var start = textaSource.selectionStart;
+			var end = textaSource.selectionEnd;
+			var selectedText = textaSource.value.substring(start,end);
+
+			// Store the start end end value of the text
+			newNode.start = start;
+			newNode.end = end;
+
+			var range = [start, end];
+			console.log("range="+JSON.stringify(range));
+			highlightRange.push(range);
+			console.log("highlightRange="+JSON.stringify(highlightRange));
+			$("#txta-source-1").highlightWithinTextarea(onInputArray);
+
+			if(selectedText != "") {
+				newNode.text = selectedText;
+				newNode.displayText = selectedText;
+			} else {
+				// Show modal 1
+				showModal(1);
+				removeActive();
+				return;
+			}
+
+			break;
+		// Scheme node
+		case 2:
+			newNode.type = "scheme";
+			newNode.text = schemeName;
+			newNode.displayText = schemeName;
+			break;
+		// Missing Text node
+		case 3:
+			newNode.type = "text";
+			newNode.start = 0;
+			newNode.end = 0;
+
+			var missingText = $("#txta-missing").val();
+			
+			if(missingText != "") {
+				newNode.text = missingText;
+				newNode.displayText = missingText;
+			} else {
+				newNode.text = "Missing Text node";
+				newNode.displayText = "Missing Text node";
+			}
+
+			break;
+		default:
+			console.log("addNode switch error!");
+	}
 	
 	// Get the centre X and Y of the svg
 	var nodeX = ($("svg").width() / 2);
@@ -544,61 +606,12 @@ function addNode(type) {
     	newNode.y = Number(nodeY);
 	}
 
-	// Get selection in the source textarea
-	var textaSource = document.getElementById("txta-source-"+activeTab);
-
-    var start = textaSource.selectionStart;
-    var end = textaSource.selectionEnd;
-	var selectedText = textaSource.value.substring(start,end);
-
-	// Store the start end end value of the text
-	newNode.start = start;
-	newNode.end = end;
-
-
-	var range = [start, end];
-	console.log("range="+JSON.stringify(range));
-	highlightRange.push(range);
-	console.log("highlightRange="+JSON.stringify(highlightRange));
-	$("#txta-source-1").highlightWithinTextarea(onInputArray);
-
-	var missingText = $("#txta-missing").val();
-	
-	// If there is no selected text - show error
-	if(selectedText != "") {
-		newNode.text = selectedText;
-		newNode.displayText = selectedText;
-	} else if(type == 3 && missingText != "") {
-		newNode.text = missingText;
-		newNode.displayText = missingText;
-	} else {
-		// Show modal 1
-		showModal(1);
-		removeActive();
-		return;
-	}
-	
-	// Based on the parameter to this function the type of node changes - set the type here
-	switch(type) {
-		case 1:
-		case 3:
-			newNode.type = "text";
-			break;
-		case 2:
-			newNode.type = "scheme";
-			break;
-		default:
-			console.log("addNode switch error!");
-	}
-	
 	// Add the new node to the array
 	data.nodes.push(newNode);
 	
 	// Increment the nodeId value
 	data.currentNodeID = data.currentNodeID+1;
 
-	textaSource.selectionStart
-	
 	update();
 }
 
