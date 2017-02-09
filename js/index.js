@@ -41,19 +41,60 @@ $(window).load(function() {
 		var currentTab = (activeTab-1);
 		data.tabs[currentTab].text = this.value;
 	});
+
+	// Function to allow multiple level dropdown menus
+	$(".dropdown-submenu a.test").on("click", function(e){
+		$(this).next("ul").toggle();
+		e.stopPropagation();
+		e.preventDefault();
+	});
 });
 
 function createSchemeDropdown() {
 	console.log("createSchemeDropdown()");
 	var schemeTypeArray = ["Perception","Memory","Statistical Syllogism","Induction","Temporal persistence","General Knowledge","Witness Testimony","Argument From Sign","Argument from Example","Argument from Verbal Classification","Argument from Commitment","Circumstantial Argument Against the Person","Argument from Position to Know","Argument from Expert Opinion","Argument from Evidence to a Hypothesis","Argument from Falsification of a Hypothesis","Argument from Correlation to Cause","Argument from Cause to Effect","Argument from Consequences","Argument from Analogy","Argument from Waste","Argument from Popular Opinion","Argument from Popular Practice","Ethotic Argument","Argument from Bias","Argument from an Established Rule","Argument from an Exceptional Case","Argument from Precedent","Argument from Gradualism","Causal Slippery Slope Argument","Precedent Slippery Slope Argument","Argument from Vagueness of a Verbal Classification","Argument from Arbitrariness of a Verbal Classification","Verbal Slippery Slope Argument","Full Slippery Slope Argument","Deductive Argument from Ignorance","Plausible Argument from Ignorance","Probabilifying Conveyance Argument","Argument from the Sameness of Meaning","Argument from Singular Cause","Argument to Common Cause","Class-Membership Argument","Argument from Species to Genus","Argument to Singular Cause","Argument from Numerical Identity","Argument from Causal Law","Argument from the Constitution of Concrete Facts.","Argument from the Constitution of Properties","Argument from the Constitution of Positive Normative Facts","Argument from the Constitution of Causal Laws","Argument from Implication","Argument from the Constitution of Negative Normative Facts","Argument from the Constitution of Constitution Facts","Argument from the Constitution of Necessary Conditions","Argument from the Constitution of Possibilities","Argument from the Constitution of Singular Causal Conditionals","Argument from the Constitution of Singular Causal Facts","Argument from the Constitution of Kind Instance","Argument from Whole to Part","Argument from Non-Causal Law","Argument from the Constitution of Impossibilities","Argument from Part to Whole"];
 
-	console.log("schemeTypeArray.length="+schemeTypeArray.length);
+	// Number of types of scheme that have been input
+	var schemeTypeArrayLength = schemeTypeArray.length;
+	console.log(" schemeTypeArrayLength="+schemeTypeArray.length);
+	// Number of scheme types per dropdown
+	var schemeTypePerDropdown = 20;
+	// Get the number of dropdowns required
+	var schemeTypeDropdowns = Math.ceil(schemeTypeArrayLength / schemeTypePerDropdown);
+	console.log(" schemeTypeDropdowns="+schemeTypeDropdowns);
 
-	if(schemeTypeArray.length > 0) {
+	if(schemeTypeArrayLength > 0) {
+		for(i = 0; i < schemeTypeDropdowns; i++){
+			$("#ul-scheme").before("<li id='li-submenu-"+(i+1)+"' class='dropdown-submenu'></li>");
+			$("#li-submenu-"+(i+1)).append("<a id='a-menu-"+(i+1)+"' class='test' tabindex='-1' href='#'>Argument Menu "+(i+1)+" <span class='caret'></span></a>");
+			$("#li-submenu-"+(i+1)).append("<ul id='li-menu-"+(i+1)+"' class='dropdown-menu'>");
+		}
+		/*
+		// Append the list item object to the unordered list
 		$.each(schemeTypeArray, function(index, value) {
-			$("#ul-scheme").append("<li class='li-scheme'><a>"+schemeTypeArray[index]+"</a></li>");
-			$(".li-scheme").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
+			if(index >= 0 && index < 20) {
+				$("#ul-scheme-1").append("<li class='li-scheme-1'><a>"+schemeTypeArray[index]+"</a></li>");
+			} else if(index >= 20 && index < 40) {
+				$("#ul-scheme-2").append("<li class='li-scheme-2'><a>"+schemeTypeArray[index]+"</a></li>");
+			} else if(index >= 40 && index < 60) {
+				$("#ul-scheme-3").append("<li class='li-scheme-3'><a>"+schemeTypeArray[index]+"</a></li>");
+			} else if(index >= 60) {
+				$("#ul-scheme-4").append("<li class='li-scheme-4'><a>"+schemeTypeArray[index]+"</a></li>");
+			}
 		});
+		// Edit the onclick attribute
+		$.each(schemeTypeArray, function(index, value) {
+			if(index >= 0 && index < 20) {
+				$(".li-scheme-1").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
+			} else if(index >= 20 && index < 40) {
+				$(".li-scheme-2").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
+			} else if(index >= 40 && index < 60) {
+				$(".li-scheme-3").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
+			} else if(index >= 60) {
+				$(".li-scheme-4").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
+			}
+		});
+		*/
 	}
 }
 

@@ -99,21 +99,23 @@
 					<div id="col-right" class="panel-right">
 						<div id="div-col-right-buttons">
 							<div class="row">
-								<div class="col-xs-2 col-md-1 col-lg-2 no-padding-lr">
+								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn btn-normal btn-block" onclick="toggleSource()"><i id="i-source" class="fa fa-chevron-left"></i>Source Panel</button>
 								</div>
-								<div class="col-xs-2 col-md-1 col-lg-2 no-padding-lr">
+								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn text-node btn-block" onclick="addNode(1)"><i class="fa fa-plus"></i> Text Node</button>
 								</div>
-								<!--<div class="col-xs-2 col-md-1 col-lg-2 no-padding-lr">
+								<!--<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn scheme-node btn-block" onclick="addNode(2)"><i class="fa fa-plus"></i> Scheme Node</button>
 								</div>-->
 								<div class="col-xs-2 col-md-2 col-lg-2 dropdown no-padding-lr">
 									<button class="btn scheme-node dropdown-toggle btn-block" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Scheme Node <span class="caret"></span></button>
-									<ul id="ul-scheme" class="dropdown-menu">
+									<ul class="dropdown-menu">
+										<li id="ul-scheme" class="dropdown-submenu">
+										</li>
 									</ul>
 								</div>
-								<div class="col-xs-2 col-md-1 col-lg-2 no-padding-lr">
+								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn btn-normal btn-block" onclick="showAllTextOverlay()"><i class="fa fa-eye"></i> Node Overlays</button>
 								</div>
 								<div class="col-xs-1 col-md-1 col-lg-1 no-padding-lr">
@@ -141,7 +143,7 @@
 										<li><a href="javascript:test()">test</a></li>
 									</ul>
 								</div>
-								<div class="col-xs-2 col-md-1 col-lg-2 no-padding-lr">
+								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn btn-primary btn-block" onclick="showModal(9)">MONKEYPUZZLE</button>
 								</div>
 							</div>
@@ -154,14 +156,14 @@
 			</div>
 			<!--col-bottom-->
 			<div id="row-2" class="row">
-				<div id="col-bottom" class="col-md-12 col-text-display no-padding-lr">
-					<div class="col-md-10 no-padding-lr">
+				<div id="col-bottom" class="col-md-12 col-lg-12 col-text-display no-padding-lr">
+					<div class="col-md-10 col-lg-10 no-padding-lr">
 						<textarea id="txta-node-text" readonly></textarea>
 					</div>
-					<div class="col-md-1 no-padding-lr">
+					<div class="col-md-1 col-lg-1 no-padding-lr">
 						<button id="btn-edit-text" class="btn btn-normal btn-block" onclick="editNodeText()"><i id="i-edit" class="fa fa-edit"></i> Text</button>
 					</div>
-					<div class="col-md-1 no-padding-lr">
+					<div class="col-md-1 col-lg-1 no-padding-lr">
 						<button id="btn-copy-text" class="btn btn-normal btn-block" onclick="copyNodeText()"><i class="fa fa-copy"></i> Text</button>
 					</div>
 				</div>
@@ -182,21 +184,21 @@
 						</div>
 						<div class="modal-body">
 							<div class="row">
-								<div class="col-md-9 no-padding-lr">
+								<div class="col-md-9 col-lg-9 no-padding-lr">
 									<p id="p-no-selection" class="modal-text">There is no text selected, add custom text node?</p>
 								</div>
-								<div class="col-md-3 no-padding-lr">
+								<div class="col-md-3 col-lg-3 no-padding-lr">
 									<!--<button id="btn-no-selection" class="btn btn-default" data-dismiss="modal" onclick="showModal(9)">Yes</button>-->
 									<button id="btn-no-selection" class="btn btn-default btn-no-selection-modal" onclick="showMissingTextOption()">Yes</button>
 								</div>
 							</div>
 							<div class="row">
 								<div id="div-add-missing-text">
-									<div class="col-md-9 no-padding-r">
+									<div class="col-md-9 col-lg-9 no-padding-r">
 										<p class="modal-text">Enter the text you wish to add here</p>
 										<textarea id="txta-missing"></textarea>
 									</div>
-									<div class="col-md-3 no-padding-lr">
+									<div class="col-md-3 col-lg-3 no-padding-lr">
 										<button id="btn-missing" type="button" class="btn btn-default btn-no-selection-modal" data-dismiss="modal" onclick="addNode(3)"><i class="fa fa-plus"></i> Add Text</button>
 									</div>
 								</div>
@@ -371,13 +373,13 @@
 							<button id="btn-download-JSON" class="btn btn-normal btn-block btn-settings btn-settings-margin" onclick="downloadJSON()"><i class="fa fa-download"></i> JSON</button>
 							<div class="row">
 								<p class="modal-text p-settings">Source Panel Maximum Width (min is 20% - max is 50%):</p>
-								<div class="col-md-4  no-padding-l">
+								<div class="col-md-4 col-lg-4 no-padding-l">
 									<button id="btn-decrease-source" class="btn btn-normal btn-settings btn-block" onclick="sourceChange('0')"><i class="fa fa-minus"></i></button>
 								</div>
-								<div class="col-md-4 no-padding-lr">
+								<div class="col-md-4 col-lg-4 no-padding-lr">
 									<button id="btn-increase-source" class="btn btn-normal btn-settings btn-block" onclick="sourceChange('1')"><i class="fa fa-plus"></i></button>
 								</div>
-								<div class="col-md-4 no-padding-r">
+								<div class="col-md-4 col-lg-4 no-padding-r">
 									<input id="input-source-display" type="text" class="form-control btn-block" placeholder="30%" readonly>
 								</div>
 							</div>

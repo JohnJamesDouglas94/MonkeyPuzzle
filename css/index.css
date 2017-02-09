@@ -99,8 +99,7 @@ html,body {
 }
 .div-col-left-source {
 	width: 100%;
-	height: calc(100% - 136px);
-	display: inline;
+	height: calc(100% - 133.43px);
 }
 #row-1 {
 	height: calc(100% - 34px);
@@ -248,4 +247,13 @@ mark:nth-child(odd) {
 mark:nth-child(even) {
 	/*background: var(--highlight-color);*/
 	background: lightblue;
+}
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
 }
