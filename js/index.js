@@ -58,9 +58,9 @@ function createSchemeDropdown() {
 	var schemeTypeArrayLength = schemeTypeArray.length;
 	console.log(" schemeTypeArrayLength="+schemeTypeArray.length);
 	// Number of scheme types per dropdown
-	var schemeTypePerDropdown = 20;
+	var schemeNumberPerDropdown = 20;
 	// Get the number of dropdowns required
-	var schemeTypeDropdowns = Math.ceil(schemeTypeArrayLength / schemeTypePerDropdown);
+	var schemeTypeDropdowns = Math.ceil(schemeTypeArrayLength / schemeNumberPerDropdown);
 	console.log(" schemeTypeDropdowns="+schemeTypeDropdowns);
 
 	if(schemeTypeArrayLength > 0) {
@@ -69,32 +69,22 @@ function createSchemeDropdown() {
 			$("#li-submenu-"+(i+1)).append("<a id='a-menu-"+(i+1)+"' class='test' tabindex='-1' href='#'>Argument Menu "+(i+1)+" <span class='caret'></span></a>");
 			$("#li-submenu-"+(i+1)).append("<ul id='li-menu-"+(i+1)+"' class='dropdown-menu'>");
 		}
-		/*
-		// Append the list item object to the unordered list
+
+		// For each scheme type - (the element index / number of schemes per dropdown) floored is the list which the element should be added
 		$.each(schemeTypeArray, function(index, value) {
-			if(index >= 0 && index < 20) {
-				$("#ul-scheme-1").append("<li class='li-scheme-1'><a>"+schemeTypeArray[index]+"</a></li>");
-			} else if(index >= 20 && index < 40) {
-				$("#ul-scheme-2").append("<li class='li-scheme-2'><a>"+schemeTypeArray[index]+"</a></li>");
-			} else if(index >= 40 && index < 60) {
-				$("#ul-scheme-3").append("<li class='li-scheme-3'><a>"+schemeTypeArray[index]+"</a></li>");
-			} else if(index >= 60) {
-				$("#ul-scheme-4").append("<li class='li-scheme-4'><a>"+schemeTypeArray[index]+"</a></li>");
-			}
+			var listNumber = Math.floor(index/schemeNumberPerDropdown);
+			listNumber = listNumber + 1;
+			console.log("listNumber="+listNumber);
+
+			var onclick = "addNode(2,"+schemeTypeArray[index]+")";
+			console.log("onclick="+onclick);
+
+			$("#li-menu-"+listNumber).append("<li id='li-scheme-"+index+"' class='li-scheme li-scheme-"+listNumber+"'><a>"+schemeTypeArray[index]+"</a></li>");
 		});
-		// Edit the onclick attribute
-		$.each(schemeTypeArray, function(index, value) {
-			if(index >= 0 && index < 20) {
-				$(".li-scheme-1").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
-			} else if(index >= 20 && index < 40) {
-				$(".li-scheme-2").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
-			} else if(index >= 40 && index < 60) {
-				$(".li-scheme-3").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
-			} else if(index >= 60) {
-				$(".li-scheme-4").eq(index).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
-			}
+
+		$(".li-scheme").each(function(index) {
+			$(this).attr("onclick","addNode(2,'"+schemeTypeArray[index]+"')");
 		});
-		*/
 	}
 }
 
