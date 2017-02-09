@@ -115,29 +115,6 @@ function panelResize(type) {
 	}
 }
 
-function genRandColor() {
-	var color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-	console.log("color="+color);
-	return color.toString();
-}
-
-function testHighlight() {
-	$("#txta-source-1").highlightWithinTextarea(onInputArray);
-	//The function call above locks (doesnt actually lock but makes the text uneditable) the tab - update the icon here
-	lockTab();
-}
-
-function test() {
-	console.log("test()!");
-	//console.log("current tab text="+$("#txta-source-"+activeTab).val());
-	//console.log("hwt-content="+$(".hwt-content").val());
-}
-
-function removeLastRangeElement() {
-	highlightRange.pop();
-	console.log("highlightRange="+JSON.stringify(highlightRange));
-}
-
 function removeHighlight() {
 	$("#txta-source-"+activeTab).data('hwt').destroy();
 }

@@ -391,9 +391,7 @@ function removeLinkFromArray() {
 	toRemove = removal[0];
 	
 	data.links.splice(data.links.indexOf(toRemove), 1);
-	
-	logToConsole("l");
-	
+		
 	update();
 }
 
@@ -408,8 +406,6 @@ function removeNodeFromArray() {
 		console.log(index + ':' + JSON.stringify(value));
 		data.nodes.splice(data.nodes.indexOf(value), 1);
 	});
-
-	logToConsole("n");
 	
 	update();
 }
@@ -427,9 +423,7 @@ function removeLinksFromNode() {
 		console.log(index + ':' + JSON.stringify(value));
 		data.links.splice(data.links.indexOf(value), 1);
 	});
-	
-	logToConsole("l");
-	
+		
 	update();
 }
 
@@ -794,24 +788,9 @@ function removeDragLine() {
 	node.on("mouseover", null);
 }
 
-// Log either the whole or sub arrays from the data object
-function logToConsole(type) {
-	switch(type) {
-		case "d":
-			console.log("data="+JSON.stringify(data));
-			break;
-		case "l":
-			console.log("data.links="+JSON.stringify(data.links));
-			break;
-		case "n":
-			console.log("data.nodes="+JSON.stringify(data.nodes));
-			break;
-		case "t":
-			console.log("data.nodes="+JSON.stringify(data.tabs));
-			break;
-		default:
-			console.log("logToConsole switch error!");
-	}
+// Log the dat object to console
+function logDataToConsole() {
+	console.log("data="+JSON.stringify(data));
 }
 
 // Display the currently selected element to the console
@@ -868,8 +847,6 @@ function moveElementsToFit(width, height) {
 
 function updateLinks() {
 	console.log("updateLinks()");
-
-	//logToConsole("l");
 
 	$.each(data.nodes, function (index, value) {
 		//console.log("source id="+JSON.stringify(value.source.id));

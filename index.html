@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" type="image/ico" href="res/favicon.ico">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>-->
 		<script src="https://d3js.org/d3.v4.js"></script>
 		<script src="js/index.js"></script>
 		<script src="js/modelling.js"></script>
@@ -17,6 +16,7 @@
 		<link rel="stylesheet" href="css/index.css">
 		<link rel="stylesheet" href="css/theme.css">
 		<link rel="stylesheet" href="css/modelling.css">
+		<link rel="stylesheet" href="css/buttons.css">
 		<link rel="stylesheet" href="css/variables.css">
 		<script src="js/saveSvgAsPng.js"></script>
 		<script type="text/javascript" src="js/jquery-resizable.js"></script>
@@ -66,8 +66,8 @@
 							</div>
 						</div>
 						<div class="div-col-left-source">
-							<div class="row div-col-left-source">
-								<div class="col-md-12 no-padding-lr div-col-left-source">
+							<div class="row height-100-percent">
+								<div class="col-md-12 no-padding-lr height-100-percent">
 									<textarea id="txta-source-1" class="txta-source" spellcheck="false" placeholder="Enter your text here..." readonly></textarea>
 									<textarea id="txta-source-2" class="txta-source" spellcheck="false" placeholder="Enter your text here..." readonly></textarea>
 									<textarea id="txta-source-3" class="txta-source" spellcheck="false" placeholder="Enter your text here..." readonly></textarea>
@@ -87,7 +87,7 @@
 									<button id="btn-lock-tab" class="btn btn-primary btn-block" onclick="lockTab()"><i id="i-lock-tab" class="fa fa-lock"></i></span><span id="span-lock"> Unlock Tab</span></button>
 								</div>
 								<div class="col-md-6 no-padding-lr">
-									<button id="btn-remove-tab" class="btn btn-danger btn-block" onclick="showModal(7)"><i class="fa fa-trash"></i></span> Delete Tab</button>
+									<button id="btn-remove-tab" class="btn btn-delete btn-block" onclick="showModal(7)"><i class="fa fa-trash"></i></span> Delete Tab</button>
 								</div>
 							</div>
 						</div>
@@ -103,13 +103,10 @@
 									<button class="btn btn-normal btn-block" onclick="toggleSource()"><i id="i-source" class="fa fa-chevron-left"></i>Source Panel</button>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
-									<button class="btn text-node btn-block" onclick="addNode(1)"><i class="fa fa-plus"></i> Text Node</button>
+									<button class="btn btn-text-node btn-block" onclick="addNode(1)"><i class="fa fa-plus"></i> Text Node</button>
 								</div>
-								<!--<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
-									<button class="btn scheme-node btn-block" onclick="addNode(2)"><i class="fa fa-plus"></i> Scheme Node</button>
-								</div>-->
 								<div class="col-xs-2 col-md-2 col-lg-2 dropdown no-padding-lr">
-									<button class="btn scheme-node dropdown-toggle btn-block" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Scheme Node <span class="caret"></span></button>
+									<button class="btn btn-scheme-node dropdown-toggle btn-block" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Scheme Node <span class="caret"></span></button>
 									<ul class="dropdown-menu">
 										<li id="ul-scheme" class="dropdown-submenu">
 										</li>
@@ -118,30 +115,8 @@
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn btn-normal btn-block" onclick="showAllTextOverlay()"><i class="fa fa-eye"></i> Node Overlays</button>
 								</div>
-								<div class="col-xs-1 col-md-1 col-lg-1 no-padding-lr">
+								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn btn-normal btn-block" onclick="showModal(4)"><i class="fa fa-keyboard-o"></i> Controls</button>
-								</div>
-								<div class="col-xs-1 col-md-1 col-lg-1 dropdown no-padding-lr">
-									<button class="btn btn-normal dropdown-toggle btn-block" type="button" data-toggle="dropdown">Testing
-									<span class="caret"></span></button>
-									<ul class="dropdown-menu">
-										<li><a href="javascript:logToConsole('d')">Data</a></li>
-										<li><a href="javascript:logToConsole('n')">Data.nodes</a></li>
-										<li><a href="javascript:logToConsole('l')">Data.links</a></li>
-										<li><a href="javascript:logToConsole('t')">Data.tabs</a></li>
-										<li><a href="javascript:showAllTextOverlay()">showAllTextOverlay</a></li>
-										<li><a href="javascript:updateLinks()">updateLinks</a></li>
-										<li><a href="javascript:getSelectedElement()">SelectedElement</a></li>
-										<li><a href="javascript:getActiveTextOverlay()">activeTextOverlay</a></li>
-										<li><a href="javascript:getActiveTab()">activeTab</a></li>
-										<li><a href="javascript:getSVGWidth()">SVG Width</a></li>
-										<li><a href="javascript:saveSVG()">Save SVG</a></li>
-										<li><a href="javascript:testHighlight()">testHighlight</a></li>
-										<li><a href="javascript:genRandColor()">genRandColor</a></li>
-										<li><a href="javascript:removeLastRangeElement()">remLastElem</a></li>
-										<li><a href="javascript:removeHighlight()">remHightlight</a></li>
-										<li><a href="javascript:test()">test</a></li>
-									</ul>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
 									<button class="btn btn-primary btn-block" onclick="showModal(9)">MONKEYPUZZLE</button>
@@ -188,18 +163,15 @@
 									<p id="p-no-selection" class="modal-text">There is no text selected, add custom text node?</p>
 								</div>
 								<div class="col-md-3 col-lg-3 no-padding-lr">
-									<!--<button id="btn-no-selection" class="btn btn-default" data-dismiss="modal" onclick="showModal(9)">Yes</button>-->
-									<button id="btn-no-selection" class="btn btn-default btn-no-selection-modal" onclick="showMissingTextOption()">Yes</button>
+									<button id="btn-no-selection" class="btn btn-default" onclick="showMissingTextOption()">Yes</button>
 								</div>
 							</div>
 							<div class="row">
 								<div id="div-add-missing-text">
-									<div class="col-md-9 col-lg-9 no-padding-r">
+									<div class="col-md-12 col-lg-12 no-padding-lr">
 										<p class="modal-text">Enter the text you wish to add here</p>
 										<textarea id="txta-missing"></textarea>
-									</div>
-									<div class="col-md-3 col-lg-3 no-padding-lr">
-										<button id="btn-missing" type="button" class="btn btn-default btn-no-selection-modal" data-dismiss="modal" onclick="addNode(3)"><i class="fa fa-plus"></i> Add Text</button>
+										<button id="btn-missing" type="button" class="btn btn-default btn-block" data-dismiss="modal" onclick="addNode(3)"><i class="fa fa-plus"></i> Add Text</button>
 									</div>
 								</div>
 							</div>
@@ -380,8 +352,22 @@
 									<button id="btn-increase-source" class="btn btn-normal btn-settings btn-block" onclick="sourceChange('1')"><i class="fa fa-plus"></i></button>
 								</div>
 								<div class="col-md-4 col-lg-4 no-padding-r">
-									<input id="input-source-display" type="text" class="form-control btn-block" placeholder="30%" readonly>
+									<input id="input-source-display" type="text" class="form-control btn-block btn-settings-margin" placeholder="30%" readonly>
 								</div>
+							</div>
+							<div class="row">
+								<button id="btn-testing" class="btn btn-normal dropdown-toggle btn-settings btn-block" type="button" data-toggle="dropdown">Testing <span class="caret"></span></button>
+									<ul class="dropdown-menu">
+										<li><a href="javascript:logDataToConsole()">Data</a></li>
+										<li><a href="javascript:showAllTextOverlay()">showAllTextOverlay</a></li>
+										<li><a href="javascript:updateLinks()">updateLinks</a></li>
+										<li><a href="javascript:getSelectedElement()">SelectedElement</a></li>
+										<li><a href="javascript:getActiveTextOverlay()">activeTextOverlay</a></li>
+										<li><a href="javascript:getActiveTab()">activeTab</a></li>
+										<li><a href="javascript:getSVGWidth()">SVG Width</a></li>
+										<li><a href="javascript:saveSVG()">Save SVG</a></li>
+										<li><a href="javascript:removeHighlight()">remHightlight</a></li>
+									</ul>
 							</div>
 						</div>
 						<div class="modal-footer">

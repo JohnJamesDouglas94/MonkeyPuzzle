@@ -99,7 +99,10 @@ html,body {
 }
 .div-col-left-source {
 	width: 100%;
-	height: calc(100% - 133.43px);
+	height: calc(100% - 136px);
+}
+.height-100-percent {
+	height: 100%;
 }
 #row-1 {
 	height: calc(100% - 34px);
@@ -155,48 +158,10 @@ html,body {
 	outline: none;
 	resize: none;
 }
-.col-left-buttons-margin {
-	padding: 0px;
-}
 #div-vis {
 	width: 100%;
 	height: calc(100% - 34px);
 	background: yellow;
-}
-.dropdown {
-	display: inline;
-}
-.text-node {
-	background-color: var(--text-color) !important;
-	border-color: var(--text-color) !important;
-}
-.text-node:active {
-	background-color: var(--text-active-color) !important;
-	border-color: var(--text-active-color) !important;
-}
-.text-node:hover {
-	background-color: var(--text-active-color) !important;
-	border-color: var(--text-active-color) !important;
-}
-.text-node:focus {
-	background-color: var(--text-active-color) !important;
-	border-color: var(--text-active-color) !important;
-}
-.scheme-node {
-	background-color: var(--scheme-color) !important;
-	border-color: var(--scheme-color) !important;
-}
-.scheme-node:active {
-	background-color: var(--scheme-active-color) !important;
-	border-color: var(--scheme-active-color) !important;
-}
-.scheme-node:hover {
-	background-color: var(--scheme-active-color) !important;
-	border-color: var(--scheme-active-color) !important;
-}
-.scheme-node:focus {
-	background-color: var(--scheme-active-color) !important;
-	border-color: var(--scheme-active-color) !important;
 }
 .contol-table-padding {
 	padding-right: 5px;
@@ -204,7 +169,7 @@ html,body {
 #btn-copy-text {
 	display: inline-block;
 }
-.btn-no-selection-modal {
+#btn-no-selection {
 	float: right;
 	margin-right: 0px;
 }
@@ -212,7 +177,7 @@ html,body {
 	margin-bottom: 0px;
 }
 #btn-missing {
-	margin-top: 101px;
+	margin-top: 15px;
 }
 #p-no-selection {
 	padding-top: 4px;
