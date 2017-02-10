@@ -3,22 +3,26 @@
   color: #000000; 
   background-color: var(--source-color); 
   border-color: var(--source-color);
-} 
+}
+
 .btn-source:hover,
 .btn-source.active,
 .open .dropdown-toggle.btn-source { 
   color: #000000; 
   background-color: var(--source-accent-color); 
   border-color: var(--source-accent-color); 
-} 
+}
+
 .btn-source.focus {
   background-color: var(--source-color); 
   border-color: var(--source-color); 
 }
+
 .btn-source.active, 
 .open .dropdown-toggle.btn-source { 
   background-image: none; 
-} 
+}
+
 .btn-source.disabled, 
 .btn-source[disabled], 
 fieldset[disabled] .btn-source, 
@@ -36,21 +40,25 @@ fieldset[disabled] .btn-source:active,
 fieldset[disabled] .btn-source.active { 
   background-color: var(--source-color); 
   border-color: var(--source-color); 
-} 
+}
+
 .btn-source .badge { 
   color: var(--source-color); 
   background-color: #000000; 
 }
+
 .btn-source.active-tab {
   background-color: var(--source-accent-color); 
   border-color: var(--source-accent-color);
 }
+
 /* Normal button */
 .btn-normal { 
   color: #000000; 
   background-color: var(--normal-color); 
   border-color: var(--normal-color); 
-} 
+}
+
 .btn-normal:hover,
 .btn-normal.active, 
 .open .dropdown-toggle.btn-normal { 
@@ -58,14 +66,17 @@ fieldset[disabled] .btn-source.active {
   background-color: var(--normal-accent-color); 
   border-color: var(--normal-accent-color);
 }
+
 .btn-normal:focus {
   background-color: var(--normal-accent-color);
   border-color: var(--normal-accent-color);
 }
+
 .btn-normal.active, 
 .open .dropdown-toggle.btn-normal { 
   background-image: none; 
-} 
+}
+
 .btn-normal.disabled, 
 .btn-normal[disabled], 
 fieldset[disabled] .btn-normal, 
@@ -84,16 +95,19 @@ fieldset[disabled] .btn-normal.active {
   background-color: var(--normal-color); 
   border-color: var(--normal-color); 
 }
+
 .btn-normal .badge { 
   color: var(--normal-color); 
   background-color: #000000; 
 }
+
 /* Settings button */
 .btn-settings { 
   color: #000000; 
   background-color: var(--settings-color); 
   border-color: var(--settings-accent-color);
-} 
+}
+
 .btn-settings:hover,
 .btn-settings.active, 
 .open .dropdown-toggle.btn-settings { 
@@ -101,14 +115,17 @@ fieldset[disabled] .btn-normal.active {
   background-color: var(--settings-accent-color); 
   border-color: var(--settings-accent-color);
 }
+
 .btn-settings:focus {
   background-color: var(--settings-accent-color);
   border-color: var(--settings-accent-color);
 }
+
 .btn-settings.active, 
 .open .dropdown-toggle.btn-settings { 
   background-image: none; 
-} 
+}
+
 .btn-settings.disabled, 
 .btn-settings[disabled], 
 fieldset[disabled] .btn-settings, 
@@ -127,17 +144,19 @@ fieldset[disabled] .btn-settings.active {
   background-color: var(--settings-color); 
   border-color: var(--settings-color); 
 }
+
 .btn-settings .badge { 
   color: var(--settings-color); 
   background-color: #000000; 
 }
+
 /* Text node button */
 .btn-text-node { 
   color: #000000; 
   background-color: #ADD8E6; 
   border-color: #ADD8E6; 
 } 
- 
+
 .btn-text-node:hover, 
 .btn-text-node:focus, 
 .btn-text-node:active, 
@@ -145,7 +164,7 @@ fieldset[disabled] .btn-settings.active {
 .open .dropdown-toggle.btn-text-node { 
   color: #000000; 
   background-color: #9BC2CF; 
-  border-color: #ADD8E6; 
+  border-color: #9BC2CF;
 } 
  
 .btn-text-node:active, 
@@ -177,6 +196,7 @@ fieldset[disabled] .btn-text-node.active {
   color: #ADD8E6; 
   background-color: #000000; 
 }
+
 /* Scheme node button */
 .btn-scheme-node { 
   color: #000000; 
@@ -191,7 +211,7 @@ fieldset[disabled] .btn-text-node.active {
 .open .dropdown-toggle.btn-scheme-node { 
   color: #000000; 
   background-color: #81d681; 
-  border-color: #90EE90; 
+  border-color: #81d681; 
 } 
  
 .btn-scheme-node:active, 
@@ -223,6 +243,7 @@ fieldset[disabled] .btn-scheme-node.active {
   color: #90EE90; 
   background-color: #000000; 
 }
+
 /* Delete button */
 .btn-delete { 
   color: #FFFFFF; 
@@ -237,7 +258,7 @@ fieldset[disabled] .btn-scheme-node.active {
 .open .dropdown-toggle.btn-delete { 
   color: #FFFFFF; 
   background-color: #C34A47; 
-  border-color: #D9534F; 
+  border-color: #C34A47; 
 } 
  
 .btn-delete:active, 
