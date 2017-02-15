@@ -40,7 +40,7 @@
 								</form>
 							</div>
 							<div class="col-md-4 no-padding-lr">
-								<button class="btn btn-source btn-block" onclick="saveTextAsFile()"><i class="fa fa-save"></i> Save .txt</button>
+								<button class="btn btn-source btn-block" onclick="saveTextAsFile(1)"><i class="fa fa-save"></i> Save .txt</button>
 							</div>
 						</div>
 						<div class="row">
@@ -107,9 +107,7 @@
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 dropdown no-padding-lr">
 									<button class="btn btn-scheme-node dropdown-toggle btn-block" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Scheme Node <span class="caret"></span></button>
-									<ul class="dropdown-menu">
-										<li id="ul-scheme" class="dropdown-submenu">
-										</li>
+									<ul id="ul-scheme" class="dropdown-menu">
 									</ul>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
@@ -160,7 +158,7 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-md-9 col-lg-9 no-padding-lr">
-									<p id="p-no-selection" class="modal-text">There is no text selected, add custom text node?</p>
+									<p class="modal-text p-modal">There is no text selected, add custom text node?</p>
 								</div>
 								<div class="col-md-3 col-lg-3 no-padding-lr">
 									<button id="btn-no-selection" class="btn btn-default" onclick="showMissingTextOption()">Yes</button>
@@ -266,6 +264,23 @@
 						</div>
 						<div class="modal-body">
 							<p class="modal-text">You can not link two text nodes</p>
+								<div class="row">
+								<div class="col-md-9 col-lg-9 no-padding-lr">
+									<p class="modal-text p-modal">Add a scheme node between these text nodes?</p>
+								</div>
+								<div class="col-md-3 col-lg-3 no-padding-lr">
+									<button id="btn-add-scheme-between-text" class="btn btn-default" data-dismiss="modal" onclick="">Yes</button>
+								</div>
+							</div>
+							<div class="row">
+								<div id="div-add-missing-text">
+									<div class="col-md-12 col-lg-12 no-padding-lr">
+										<p class="modal-text">Enter the text you wish to add here</p>
+										<textarea id="txta-missing"></textarea>
+										<button id="btn-missing" type="button" class="btn btn-default btn-block" data-dismiss="modal" onclick="addNode(3)"><i class="fa fa-plus"></i> Add Text</button>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -337,19 +352,20 @@
 						<div class="modal-body">
 							<p class="modal-text p-settings">Save Visualisation As:</p>
 							<input id="input-file-name" type="text" class="form-control input-settings" placeholder="model">
-							<button id="btn-save-svg" class="btn btn-normal btn-block btn-settings btn-settings-margin" onclick="saveSVG()"><i class="fa fa-save"></i> Visualisation</button>
+							<button id="btn-save-svg" class="btn btn-settings btn-block btn-settings-margin" onclick="saveSVG()"><i class="fa fa-save"></i> Visualisation</button>
 							<p class="modal-text p-settings">Upload JSON:</p>
 							<input id="input-upload-JSON" type="text" class="form-control input-settings" placeholder="JSON">
-							<button id="btn-upload-JSON" class="btn btn-normal btn-block btn-settings btn-settings-margin" onclick="uploadJSON()"><i class="fa fa-upload"></i> JSON</button>
+							<button id="btn-upload-JSON" class="btn btn-settings btn-block btn-settings-margin" onclick="uploadJSON()"><i class="fa fa-upload"></i> JSON</button>
 							<p class="modal-text p-settings">Download JSON:</p>
-							<button id="btn-download-JSON" class="btn btn-normal btn-block btn-settings btn-settings-margin" onclick="downloadJSON()"><i class="fa fa-download"></i> JSON</button>
+							<input id="input-download-JSON" type="text" class="form-control input-settings" placeholder="data">
+							<button id="btn-download-JSON" class="btn btn-settings btn-block btn-settings-margin" onclick="downloadJSON()"><i class="fa fa-download"></i> JSON</button>
 							<div class="row">
 								<p class="modal-text p-settings">Source Panel Maximum Width (min is 20% - max is 50%):</p>
 								<div class="col-md-4 col-lg-4 no-padding-l">
-									<button id="btn-decrease-source" class="btn btn-normal btn-settings btn-block" onclick="sourceChange('0')"><i class="fa fa-minus"></i></button>
+									<button id="btn-decrease-source" class="btn btn-settings btn-block" onclick="sourceChange('0')"><i class="fa fa-minus"></i></button>
 								</div>
 								<div class="col-md-4 col-lg-4 no-padding-lr">
-									<button id="btn-increase-source" class="btn btn-normal btn-settings btn-block" onclick="sourceChange('1')"><i class="fa fa-plus"></i></button>
+									<button id="btn-increase-source" class="btn btn-settings btn-block" onclick="sourceChange('1')"><i class="fa fa-plus"></i></button>
 								</div>
 								<div class="col-md-4 col-lg-4 no-padding-r">
 									<input id="input-source-display" type="text" class="form-control btn-block btn-settings-margin" placeholder="30%" readonly>

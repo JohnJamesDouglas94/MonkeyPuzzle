@@ -44,6 +44,8 @@ $(window).load(function() {
 
 	// Function to allow multiple level dropdown menus
 	$(".dropdown-submenu a.test").on("click", function(e){
+		//hide open menus before opening another
+		$(".li-menu").hide();
 		$(this).next("ul").toggle();
 		e.stopPropagation();
 		e.preventDefault();
@@ -65,20 +67,22 @@ function createSchemeDropdown() {
 
 	if(schemeTypeArrayLength > 0) {
 		for(i = 0; i < schemeTypeDropdowns; i++){
-			$("#ul-scheme").before("<li id='li-submenu-"+(i+1)+"' class='dropdown-submenu'></li>");
+			// Add a default scheme option to the beginning of the list
+			if(i == 0) {
+				$("#ul-scheme").append("<li id='li-default'></li>");
+				$("#li-default").attr("onclick","addNode(2,'Default')");
+				$("#li-default").append("<a>Default</a>");
+			}
+			$("#ul-scheme").append("<li id='li-submenu-"+(i+1)+"' class='dropdown-submenu'></li>");
 			$("#li-submenu-"+(i+1)).append("<a id='a-menu-"+(i+1)+"' class='test' tabindex='-1' href='#'>Argument Menu "+(i+1)+" <span class='caret'></span></a>");
-			$("#li-submenu-"+(i+1)).append("<ul id='li-menu-"+(i+1)+"' class='dropdown-menu'>");
+			$("#li-submenu-"+(i+1)).append("<ul id='li-menu-"+(i+1)+"' class='dropdown-menu li-menu'>");
 		}
 
 		// For each scheme type - (the element index / number of schemes per dropdown) floored is the list which the element should be added
 		$.each(schemeTypeArray, function(index, value) {
 			var listNumber = Math.floor(index/schemeNumberPerDropdown);
 			listNumber = listNumber + 1;
-			console.log("listNumber="+listNumber);
-
 			var onclick = "addNode(2,"+schemeTypeArray[index]+")";
-			console.log("onclick="+onclick);
-
 			$("#li-menu-"+listNumber).append("<li id='li-scheme-"+index+"' class='li-scheme li-scheme-"+listNumber+"'><a>"+schemeTypeArray[index]+"</a></li>");
 		});
 
@@ -183,7 +187,7 @@ function toggleSource(toggle) {
 }
 
 function sampleText() {
-	$("#txta-source").val("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sagittis magna. Quisque augue nisl, aliquet vel vehicula sit amet, lobortis at ex."
+	$("#txta-source"+activeTab).val("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sagittis magna. Quisque augue nisl, aliquet vel vehicula sit amet, lobortis at ex."
 	+"Donec quis lacinia lorem. Pellentesque venenatis eget lacus ac sagittis. Phasellus a congue purus. Vestibulum fringilla lectus ac massa volutpat cursus. Donec ac eleifend"
 	+"tortor, et blandit erat. Quisque a consequat ligula, non tincidunt mauris. Quisque tincidunt ultrices tortor, a venenatis sapien facilisis sed. Aliquam nisl elit, tempor at"
 	+"feugiat non, tempus quis enim. Donec cursus tempus augue, vitae dapibus sem volutpat eu. Vivamus dolor sapien, porttitor fermentum tortor at, placerat malesuada sem. Sed vitae enim scelerisque,"
@@ -247,6 +251,7 @@ function clearSource() {
 }
 
 function uploadText() {
+	console.log("uploadText!");
 	// This function allows the upload button to read and upload the text back to back
 	$("#fileInput").on("click", function(e){
     	$(this).prop("value", "");
@@ -277,13 +282,29 @@ function readFile(file, callback) {
 }
 
 // Save the current tab content as a .txt
-function saveTextAsFile() {
+function saveTextAsFile(type) {
 	try {
-		var elementName = "#txta-source-"+activeTab;
-		var textToWrite = $(elementName).val();
-		var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
-		//var fileNameToSaveAs = "ecc.plist";
-		var fileNameToSaveAs = "MonkeyPuzzleTab"+activeTab;
+		switch(Number(type)) {
+			case 1:
+				var textToWrite = $("#txta-source-"+activeTab).val();
+				var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
+				var fileNameToSaveAs = "MonkeyPuzzleTab"+activeTab;
+				break;
+			case 2:
+				var textToWrite = JSON.stringify(data);
+				var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
+				var fileNameToSaveAs = $("#input-download-JSON").val();
+				// If the file name is empty - set to the default "data"
+				if(fileNameToSaveAs == "") {
+					fileNameToSaveAs = "data";
+				}
+				break
+			default:
+				console.log("saveTextAsFile switch error!");
+		}
+		//var textToWrite = $("#txta-source-"+activeTab).val();
+		//var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
+		//var fileNameToSaveAs = "MonkeyPuzzleTab"+activeTab;
 
 		var downloadLink = document.createElement("a");
 		downloadLink.download = fileNameToSaveAs;
@@ -466,7 +487,8 @@ function uploadJSON() {
 }
 //TODO: allow the data object to be downloaded
 function downloadJSON() {
-
+	// Save the data object as a string into a file
+	saveTextAsFile(2);
 }
 
 function getActiveTab() {

@@ -23,6 +23,9 @@ var addNodeOffset = 0;
 // Increment for increasing the distance a node moves when added in the centre of the screen
 var addNodeIncrement = 20;
 
+var count = 0;
+var count2 = 0;
+
 // The object holding the existing visualisation data
 /*
 var data = {
@@ -33,12 +36,20 @@ var data = {
 };
 */
 var data = {
+	nodes: [{id: 0, x: 200, y: 400, text: "lorem", type:"text"},{id: 1, x: 400, y: 400, text: "ipsum", type:"scheme"},{id: 2, x: 400, y: 200, text: "dolor", type:"text"},{id: 3, x: 600, y: 400, text: "sit", type:"scheme"},{id: 4, x: 400, y: 600, text: "amet", type:"text"}],
+	links: [{source:{id: 2, x: 400, y: 200, text: "dolor", type:"text"},target:{id: 3, x: 600, y: 400, text: "sit", type:"scheme"}}],
+	tabs: [{tab: 1, text: ""}, {tab: 2, text: ""}, {tab: 3, text: ""}, {tab: 4, text: ""}, {tab: 5, text: ""}, {tab: 6, text: ""}, {tab: 7, text: ""}, {tab: 8, text: ""}, {tab: 9, text: ""}, {tab: 10, text: ""},],
+	currentNodeID: 0
+};
+
+/*
+var data = {
 	nodes: [],
 	links: [],
 	tabs: [{tab: 1, text: ""}, {tab: 2, text: ""}, {tab: 3, text: ""}, {tab: 4, text: ""}, {tab: 5, text: ""}, {tab: 6, text: ""}, {tab: 7, text: ""}, {tab: 8, text: ""}, {tab: 9, text: ""}, {tab: 10, text: ""},],
 	currentNodeID: 0
 };
-
+*/
 function createSVG() {
 	d3.select(window)
 		.on("keydown", keyDown);
@@ -507,16 +518,22 @@ function showAllTextOverlay() {
 	selectedElement = null;
 }
 
-function addNode(type,schemeName) {
+function addNode(type,schemeName,nodePosition) {
+	console.log("nodePosition="+nodePosition);
+
 	var svg = d3.select("svg");
 
 	var newNode = {};
     newNode.id = Number(data.currentNodeID);
 
-		// Based on the parameter to this function the type of node changes - set the type here
+	// Based on the parameter to this function the type of node changes - set the type here
 	switch(type) {
 		// Text node
 		case 1:
+			// Text nodes are added in the centre of the SVG - find X and Y
+			var nodeX = ($("svg").width() / 2);
+			var nodeY = ($("svg").height() / 2);
+
 			// If the node request is a text node and has text from a source tab - set node type and store the text selection range in the node object 
 			newNode.type = "text";
 
@@ -531,11 +548,13 @@ function addNode(type,schemeName) {
 			newNode.start = start;
 			newNode.end = end;
 
+			/* HIGHLIGHTING
 			var range = [start, end];
 			console.log("range="+JSON.stringify(range));
 			highlightRange.push(range);
 			console.log("highlightRange="+JSON.stringify(highlightRange));
 			$("#txta-source-1").highlightWithinTextarea(onInputArray);
+			*/
 
 			if(selectedText != "") {
 				newNode.text = selectedText;
@@ -546,16 +565,23 @@ function addNode(type,schemeName) {
 				removeActive();
 				return;
 			}
-
 			break;
 		// Scheme node
 		case 2:
+			// Scheme nodes are added in the centre of the SVG - find X and Y
+			var nodeX = ($("svg").width() / 2);
+			var nodeY = ($("svg").height() / 2);
+
 			newNode.type = "scheme";
 			newNode.text = schemeName;
 			newNode.displayText = schemeName;
 			break;
 		// Missing Text node
 		case 3:
+			// Missing Text nodes are added in the centre of the SVG - find X and Y
+			var nodeX = ($("svg").width() / 2);
+			var nodeY = ($("svg").height() / 2);
+
 			newNode.type = "text";
 			newNode.start = 0;
 			newNode.end = 0;
@@ -571,13 +597,21 @@ function addNode(type,schemeName) {
 			}
 
 			break;
+		// Text node to text node shortcut scheme node
+		case 4:
+			// Shortcut scheme nodes are added between the start node and the end - find X and Y between these nodes
+			var nodeX = ((nodePosition.x2 + nodePosition.x1) / 2);
+			var nodeY = ((nodePosition.y2 + nodePosition.y1) / 2);
+
+			newNode.type = "scheme";
+			newNode.text = "Default";
+			newNode.displayText = "Default";
+			break;
+
+			break;
 		default:
 			console.log("addNode switch error!");
 	}
-	
-	// Get the centre X and Y of the svg
-	var nodeX = ($("svg").width() / 2);
-	var nodeY = ($("svg").height() / 2);
 
 	// Variable to hold if a node is already in the centre of the svg
 	var positionTaken = false;
@@ -596,26 +630,34 @@ function addNode(type,schemeName) {
 		newNode.y = nodeY + addNodeOffset;
 	} else {
 		// Set the new node to appear at the centre of the svg
-    	newNode.x = Number(nodeX);
-    	newNode.y = Number(nodeY);
+		newNode.x = Number(nodeX);
+		newNode.y = Number(nodeY);
 	}
-
+	
 	// Add the new node to the array
 	data.nodes.push(newNode);
-	
+
 	// Increment the nodeId value
 	data.currentNodeID = data.currentNodeID+1;
 
 	update();
 }
 
-function addLink() {
+function addLink(idStart,idEnd) {
+	console.log("idStart="+idStart);
+	console.log("idEnd="+idEnd);
+
 	var node = d3.selectAll(".svg-node");
 	// Remove text overlay before creating link
 	removeTextOverlay();
 	
-	// The first id - the source of the link
-	var id1 = d3.select(selectedElement).node().attr("id");
+	// If the parameter is null - set id1 to the selectedElement id
+	if(idStart == null) {
+		// The first id - the source of the link
+		var id1 = d3.select(selectedElement).node().attr("id");
+	} else {
+		var id1 = idStart;
+	}
 	
 	var id1Filter = data.nodes.filter(function(n) {
 		return (n.id == Number(id1));
@@ -647,10 +689,14 @@ function addLink() {
 	
 	// Function which displays the drag line
 	dragLine(id1);
-			
+
+	var id2 = 0;
+
 	node.on("mouseover", function(d) {	
-		// The second id - the target of the link	
-		var id2 = d3.select(this).attr("id");
+		// The second id - the target of the link
+		id2 = d3.select(this).attr("id");
+
+		console.log("id2="+id2);
 
 		var id2Filter = data.nodes.filter(function(n) {
 			return (n.id == Number(id2));
@@ -671,39 +717,110 @@ function addLink() {
 
 		// Check both nodes being linked and if they are both text they can not be linked
 		if(id1Type == "text" && id2Type == "text") {
-			// Show modal 5
+			// Show modal 5 TODO
 			showModal(5);
+			count++;
+			console.log("count="+count);
+			$("#modal-link-text").on("hide.bs.modal", function(e) {
+				count2++;
+				console.log("count2="+count2);
+
+				var val = $(document.activeElement).attr("id");
+				console.log(val);
+
+				if(val == "btn-add-scheme-between-text") {
+					var position = {};
+					position.x1 = Number(id1Filter[0].x);
+					position.y1 = Number(id1Filter[0].y);
+					position.x2 = Number(id2Filter[0].x);
+					position.y2 = Number(id2Filter[0].y);
+
+					// Add a default scheme node
+					addNode(4,"",position);
+
+					currentNodeId = (data.currentNodeID - 1);
+
+					addLinkToData(id1Filter[0].id,currentNodeId);
+					addLinkToData(currentNodeId,id2Filter[0].id);
+
+					console.log("id1="+id1Filter[0].id);
+					console.log("id2="+id2Filter[0].id);
+					console.log("id New="+data.currentNodeID);
+				}
+			});
+			$("#modal-link-text").on("hide.bs.modal", function(e) {
+			});
+			// Remove drag line
 			removeDragLine();
 			// Remove the node as active
 			removeActive();
 			return;
 		}
 
+		console.log("id1="+id1);
+		console.log("id2="+id2);
+
 		// If the source of the link is different to the target
 		if(id1 != id2) {
+			addLinkToData(id1,id2);
+			/*
 			var link = {};
-			var s = data.nodes.filter(function(n) {
+			var source = data.nodes.filter(function(n) {
 				return (n.id == Number(id1));
 			});
 			
 			// Set the source of the link to the first element of the filter (it should only ever return one result)
-			link.source = s[0];
+			link.source = source[0];
+
+			console.log("source="+JSON.stringify(source[0]));
 			
-			var t = data.nodes.filter(function(n) {
+			var target = data.nodes.filter(function(n) {
 				return (n.id == Number(id2));
 			});
 			
 			// Set the target of the link to the first element of the filter (it should only ever return one result)
-			link.target = t[0];
+			link.target = target[0];
+
+			console.log("target="+JSON.stringify(target[0]));
 			
 			// Push the link to the data object
 			data.links.push(link);
 			
 			update();
+			*/
 		}
 	});
 	// Set the selectedElement back to null
 	selectedElement = null;
+}
+
+function addLinkToData(id1,id2) {
+	console.log("id1="+id1);
+	console.log("id2="+id2);
+
+	var link = {};
+	var source = data.nodes.filter(function(n) {
+		return (n.id == Number(id1));
+	});
+	
+	// Set the source of the link to the first element of the filter (it should only ever return one result)
+	link.source = source[0];
+
+	console.log("source="+JSON.stringify(source[0]));
+	
+	var target = data.nodes.filter(function(n) {
+		return (n.id == Number(id2));
+	});
+	
+	// Set the target of the link to the first element of the filter (it should only ever return one result)
+	link.target = target[0];
+
+	console.log("target="+JSON.stringify(target[0]));
+	
+	// Push the link to the data object
+	data.links.push(link);
+	
+	update();
 }
 
 function dragLine(id) {	
@@ -902,8 +1019,4 @@ function editNodeText() {
 		editText = false;
 		return;
 	}
-}
-
-function updateTabData() {
-
 }

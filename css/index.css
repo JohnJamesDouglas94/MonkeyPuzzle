@@ -173,13 +173,17 @@ html,body {
 	float: right;
 	margin-right: 0px;
 }
+#btn-add-scheme-between-text {
+	float: right;
+	margin-right: 0px;
+}
 .modal-text {
 	margin-bottom: 0px;
 }
 #btn-missing {
 	margin-top: 15px;
 }
-#p-no-selection {
+.p-modal {
 	padding-top: 4px;
 }
 #div-add-missing-text {
