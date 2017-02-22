@@ -23,25 +23,16 @@ var addNodeOffset = 0;
 // Increment for increasing the distance a node moves when added in the centre of the screen
 var addNodeIncrement = 20;
 
-var count = 0;
-var count2 = 0;
+var count = 0,
+count2 = 0;
 
 // The object holding the existing visualisation data
-/*
 var data = {
-	nodes: [{id: 0, x: 200, y: 400, text: "lorem", type:"text"},{id: 1, x: 400, y: 400, text: "ipsum", type:"scheme"},{id: 2, x: 400, y: 200, text: "dolor", type:"text"},{id: 3, x: 600, y: 400, text: "sit", type:"scheme"},{id: 4, x: 400, y: 600, text: "amet", type:"text"}],
-	links: [{source: {id: 0, x: 200, y: 400, text: "lorem", type:"text"}, target: {id: 1, x: 400, y: 400, text: "ipsum", type:"scheme"}},{source:{id: 2, x: 400, y: 200, text: "dolor", type:"text"},target:{id: 3, x: 600, y: 400, text: "sit", type:"scheme"}}],
-	tabs: [{tab: 1, text: ""}, {tab: 2, text: ""}, {tab: 3, text: ""}, {tab: 4, text: ""}, {tab: 5, text: ""}, {tab: 6, text: ""}, {tab: 7, text: ""}, {tab: 8, text: ""}, {tab: 9, text: ""}, {tab: 10, text: ""},],
-	currentNodeID: 0
-};
-*/
-var data = {
-	nodes: [{id: 0, x: 200, y: 400, text: "lorem", type:"text"},{id: 1, x: 400, y: 400, text: "ipsum", type:"scheme"},{id: 2, x: 400, y: 200, text: "dolor", type:"text"},{id: 3, x: 600, y: 400, text: "sit", type:"scheme"},{id: 4, x: 400, y: 600, text: "amet", type:"text"}],
+	nodes: [{id: 0, x: 200, y: 400, text: "lorem", displayText: "lorem", type:"text"},{id: 1, x: 400, y: 400, text: "ipsum", displayText: "ipsum", type:"scheme"},{id: 2, x: 400, y: 200, text: "dolor", displayText: "dolor", type:"text"},{id: 3, x: 600, y: 400, text: "sit", displayText: "sit", type:"scheme"},{id: 4, x: 400, y: 600, text: "amet", displayText: "amet", type:"text"}],
 	links: [{source:{id: 2, x: 400, y: 200, text: "dolor", type:"text"},target:{id: 3, x: 600, y: 400, text: "sit", type:"scheme"}}],
 	tabs: [{tab: 1, text: ""}, {tab: 2, text: ""}, {tab: 3, text: ""}, {tab: 4, text: ""}, {tab: 5, text: ""}, {tab: 6, text: ""}, {tab: 7, text: ""}, {tab: 8, text: ""}, {tab: 9, text: ""}, {tab: 10, text: ""},],
 	currentNodeID: 0
 };
-
 /*
 var data = {
 	nodes: [],
@@ -50,6 +41,7 @@ var data = {
 	currentNodeID: 0
 };
 */
+
 function createSVG() {
 	d3.select(window)
 		.on("keydown", keyDown);
@@ -390,10 +382,13 @@ function keyDown() {
 	}
 }
 
+// Remove link from data object and update
 function removeLinkFromArray() {
+	// Get all coordinates from the link line element
 	var coords = {x1: Number(d3.select(selectedElement).node().attr("x1")), y1: Number(d3.select(selectedElement).node().attr("y1")),
 				  x2: Number(d3.select(selectedElement).node().attr("x2")), y2: Number(d3.select(selectedElement).node().attr("y2"))};
 
+	// Find the exact link
 	var removal = data.links.filter(function(l) {
 		return (l.source.x == coords.x1 && l.source.y == coords.y1 && l.target.x == coords.x2 && l.target.y == coords.y2);
 	});
@@ -406,9 +401,11 @@ function removeLinkFromArray() {
 	update();
 }
 
+// Remove node from data object and update
 function removeNodeFromArray() {
 	var removeId = Number(d3.select(selectedElement).node().attr("id"));
 	
+	// Find the exact node
 	var removal = data.nodes.filter(function(n) {
 		return (n.id == removeId);
 	});	
@@ -421,9 +418,11 @@ function removeNodeFromArray() {
 	update();
 }
 
+// Remove links attached to a node
 function removeLinksFromNode() {
 	var removeId = Number(d3.select(selectedElement).node().attr("id"));
 	
+	// Find link with source or target equal to the id
 	var removal = data.links.filter(function(l) {
 		return (l.source.id == removeId || l.target.id == removeId);
 	});
@@ -447,6 +446,7 @@ function setTextRow(id) {
 	$("#txta-node-text").val(element[0].displayText);
 }
 
+// Clear the text row
 function clearTextRow() {
 	$("#txta-node-text").val("");
 }
@@ -469,13 +469,19 @@ function showNodeTextOverlay(id, showAll) {
 			.text(function() { return data.nodes[id].displayText })
 			.attr("x", function() { return data.nodes[id].x + nodeTextBoxOffset; })
 			.attr("y", function() { return data.nodes[id].y + nodeTextBoxOffset; });
+
+		console.log("data.nodes[id].x="+data.nodes[id].x);
+		console.log("data.nodes[id].y="+data.nodes[id].y);
 					
 		var textBox = d3.select("#svg-overlay"+id);
 		var bbox = textBox.node().getBBox();
+
+		console.log("bbox="+bbox.x);
+		console.log("bbox="+bbox.y);
 		
 		// Rect background for the text overlay - insert the rectangle before the text element
 		rect = svg.insert("rect", "#svg-overlay"+id)
-			.attr("id", "svg-overlay-rect"+id)
+			.attr("id", "svg-overlay-rect-"+id)
 			.classed("svg-overlay", true)
 			.classed("svg-overlay-rect-text", function(d) { return data.nodes[id].type == "text"; })
 			.classed("svg-overlay-rect-scheme", function(d) { return data.nodes[id].type == "scheme"; })
@@ -492,6 +498,10 @@ function showNodeTextOverlay(id, showAll) {
 	}
 }
 
+function mouseOverTextOverlay() {
+
+}
+
 function removeTextOverlay() {
 	// Remove other text boxes and set active to false
 	d3.selectAll(".svg-text-overlay, .svg-overlay").remove();
@@ -503,7 +513,7 @@ function showAllTextOverlay() {
 	console.log("showAllTextOverlay()");
 
 	if(allActiveTextOverlay == false) {
-		for(var i=0; i < data.nodes.length; i++) {
+		for(var i = 0; i < data.nodes.length; i++) {
 			var id = data.nodes[i].id;
 			console.log("id="+id);
 
@@ -747,8 +757,8 @@ function addLink(idStart,idEnd) {
 					console.log("id2="+id2Filter[0].id);
 					console.log("id New="+data.currentNodeID);
 				}
-			});
-			$("#modal-link-text").on("hide.bs.modal", function(e) {
+				//remove this event listener - prevent additional scheme node shorcuts being added
+				$("#modal-link-text").off("hide.bs.modal");
 			});
 			// Remove drag line
 			removeDragLine();
@@ -763,31 +773,6 @@ function addLink(idStart,idEnd) {
 		// If the source of the link is different to the target
 		if(id1 != id2) {
 			addLinkToData(id1,id2);
-			/*
-			var link = {};
-			var source = data.nodes.filter(function(n) {
-				return (n.id == Number(id1));
-			});
-			
-			// Set the source of the link to the first element of the filter (it should only ever return one result)
-			link.source = source[0];
-
-			console.log("source="+JSON.stringify(source[0]));
-			
-			var target = data.nodes.filter(function(n) {
-				return (n.id == Number(id2));
-			});
-			
-			// Set the target of the link to the first element of the filter (it should only ever return one result)
-			link.target = target[0];
-
-			console.log("target="+JSON.stringify(target[0]));
-			
-			// Push the link to the data object
-			data.links.push(link);
-			
-			update();
-			*/
 		}
 	});
 	// Set the selectedElement back to null
@@ -905,22 +890,6 @@ function removeDragLine() {
 	node.on("mouseover", null);
 }
 
-// Log the dat object to console
-function logDataToConsole() {
-	console.log("data="+JSON.stringify(data));
-}
-
-// Display the currently selected element to the console
-function getSelectedElement() {
-	console.log("getSelectedElement()");
-	console.log("selectedElement="+JSON.stringify(selectedElement));
-}
-
-function getActiveTextOverlay() {
-	console.log("getActiveTextOverlay()");
-	console.log("ActiveTextOverlay="+activeTextOverlay);
-}
-
 function moveElementsToFit(width, height) {
 	console.log("moveElementsToFit()");
 	var svg = d3.select("svg");
@@ -1019,4 +988,31 @@ function editNodeText() {
 		editText = false;
 		return;
 	}
+}
+
+// Log the data object to console
+function logDataToConsole(type) {
+	switch(type) {
+		case "d":
+			console.log("data="+JSON.stringify(data));
+			break;
+		case "n":
+			console.log("data.nodes="+JSON.stringify(data.nodes));
+			break;
+		case "l":
+			console.log("data.links="+JSON.stringify(data.links));
+			break;
+		case "t":
+			console.log("data.tabs="+JSON.stringify(data.tabs));
+			break;
+		case "id":
+			console.log("data.currentNodeID="+JSON.stringify(data.currentNodeID));
+			break;
+		default:
+			console.log("logDataToConsole switch error");
+	}
+}
+
+function logCount() {
+	console.log("count="+count+" count2="+count2);
 }

@@ -31,6 +31,9 @@ function showModal(name) {
 		case 10:
 			$("#modal-maximum-tabs").modal("show");
 			break;	
+		case 11:
+			$("#modal-edit-node-text").modal("show");
+			break;	
 		default:
 			console.log("showModal Error!");
 	}

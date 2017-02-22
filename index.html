@@ -99,24 +99,24 @@
 					<div id="col-right" class="panel-right">
 						<div id="div-col-right-buttons">
 							<div class="row">
-								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
-									<button class="btn btn-normal btn-block" onclick="toggleSource()"><i id="i-source" class="fa fa-chevron-left"></i>Source Panel</button>
+								<div class="col-xs-1 col-md-1 col-lg-1 no-padding-lr">
+									<button class="btn btn-normal btn-block" onclick="toggleSource()"><i id="i-source" class="fa fa-chevron-left"></i></button>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
-									<button class="btn btn-text-node btn-block" onclick="addNode(1)"><i class="fa fa-plus"></i> Text Node</button>
+									<button class="btn btn-text-node btn-block" onclick="addNode(1)"><i class="fa fa-plus"></i> Text</button>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 dropdown no-padding-lr">
-									<button class="btn btn-scheme-node dropdown-toggle btn-block" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Scheme Node <span class="caret"></span></button>
+									<button class="btn btn-scheme-node dropdown-toggle btn-block" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Scheme <span class="caret"></span></button>
 									<ul id="ul-scheme" class="dropdown-menu">
 									</ul>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
-									<button class="btn btn-normal btn-block" onclick="showAllTextOverlay()"><i class="fa fa-eye"></i> Node Overlays</button>
+									<button class="btn btn-normal btn-block" onclick="showAllTextOverlay()"><i class="fa fa-eye"></i> Content</button>
 								</div>
 								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
-									<button class="btn btn-normal btn-block" onclick="showModal(4)"><i class="fa fa-keyboard-o"></i> Controls</button>
+									<button id="btn-mouse-overlay" class="btn btn-normal btn-block" onclick=""><i class="fa fa-mouse-pointer"></i> Info</button>
 								</div>
-								<div class="col-xs-2 col-md-2 col-lg-2 no-padding-lr">
+								<div class="col-xs-3 col-md-3 col-lg-3 no-padding-lr">
 									<button class="btn btn-primary btn-block" onclick="showModal(9)">MONKEYPUZZLE</button>
 								</div>
 							</div>
@@ -350,6 +350,8 @@
 							<h4 class="modal-title title-primary">Settings</h4>
 						</div>
 						<div class="modal-body">
+							<p class="modal-text p-settings">Controls:</p>
+							<button class="btn btn-settings btn-block btn-settings-margin" data-dismiss="modal" onclick="showModal(4)"><i class="fa fa-keyboard-o"></i> Controls</button>
 							<p class="modal-text p-settings">Save Visualisation As:</p>
 							<input id="input-file-name" type="text" class="form-control input-settings" placeholder="model">
 							<button id="btn-save-svg" class="btn btn-settings btn-block btn-settings-margin" onclick="saveSVG()"><i class="fa fa-save"></i> Visualisation</button>
@@ -374,15 +376,14 @@
 							<div class="row">
 								<button id="btn-testing" class="btn btn-normal dropdown-toggle btn-settings btn-block" type="button" data-toggle="dropdown">Testing <span class="caret"></span></button>
 									<ul class="dropdown-menu">
-										<li><a href="javascript:logDataToConsole()">Data</a></li>
+										<li><a href="javascript:logDataToConsole('d')">Data</a></li>
+										<li><a href="javascript:logDataToConsole('n')">Data.nodes</a></li>
+										<li><a href="javascript:logDataToConsole('l')">Data.links</a></li>
+										<li><a href="javascript:logDataToConsole('t')">Data.tabs</a></li>
+										<li><a href="javascript:logDataToConsole('id')">Data.currentNodeID</a></li>
 										<li><a href="javascript:showAllTextOverlay()">showAllTextOverlay</a></li>
-										<li><a href="javascript:updateLinks()">updateLinks</a></li>
-										<li><a href="javascript:getSelectedElement()">SelectedElement</a></li>
-										<li><a href="javascript:getActiveTextOverlay()">activeTextOverlay</a></li>
-										<li><a href="javascript:getActiveTab()">activeTab</a></li>
-										<li><a href="javascript:getSVGWidth()">SVG Width</a></li>
-										<li><a href="javascript:saveSVG()">Save SVG</a></li>
 										<li><a href="javascript:removeHighlight()">remHightlight</a></li>
+										<li><a href="javascript:logCount()">logCount</a></li>
 									</ul>
 							</div>
 						</div>
@@ -399,6 +400,23 @@
 					<div class="modal-content">
 						<div class="modal-header color-warning">
 							<h4 class="modal-title">Maximum tabs</h4>
+						</div>
+						<div class="modal-body">
+							<p class="modal-text">You already have the maximum number of tabs</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Modal-->
+			<div id="modal-edit-node-text" class="modal fade" role="dialog" data-backdrop="static">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header color-warning">
+							<h4 class="modal-title">Edit text node</h4>
 						</div>
 						<div class="modal-body">
 							<p class="modal-text">You already have the maximum number of tabs</p>

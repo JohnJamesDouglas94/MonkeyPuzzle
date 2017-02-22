@@ -58,12 +58,12 @@ function createSchemeDropdown() {
 
 	// Number of types of scheme that have been input
 	var schemeTypeArrayLength = schemeTypeArray.length;
-	console.log(" schemeTypeArrayLength="+schemeTypeArray.length);
+	console.log("schemeTypeArrayLength="+schemeTypeArray.length);
 	// Number of scheme types per dropdown
 	var schemeNumberPerDropdown = 20;
 	// Get the number of dropdowns required
 	var schemeTypeDropdowns = Math.ceil(schemeTypeArrayLength / schemeNumberPerDropdown);
-	console.log(" schemeTypeDropdowns="+schemeTypeDropdowns);
+	console.log("schemeTypeDropdowns="+schemeTypeDropdowns);
 
 	if(schemeTypeArrayLength > 0) {
 		for(i = 0; i < schemeTypeDropdowns; i++){
@@ -125,19 +125,6 @@ function removeHighlight() {
 
 function onInputArray(input) {
 	return highlightRange;
-}
-
-// Update the width attribute of the SVG - for the saving library
-function getSVGWidth() {
-	var w = $("#col-right").css("width");
-	console.log("col-right width="+w);
-
-	console.log($("#svg-vis").css("width"));
-	console.log("svg-vis width="+$("#svg-vis").attr("width"));
-
-	$("#svg-vis").attr("width",w);
-
-	console.log("svg-vis width="+$("#svg-vis").attr("width"));
 }
 
 function sourceChange(type) {
@@ -265,6 +252,10 @@ function uploadText() {
 			$("#txta-source-"+activeTab).val("");
 			console.log("text="+currentFile);
 			$("#txta-source-"+activeTab).val(currentFile);
+
+			// Update the value of the data object to include the text uploaded
+			var currentTab = (activeTab-1);
+			data.tabs[currentTab].text = currentFile;
 		});
 
 		// Set the name of the tab to the name of the uploaded file
@@ -489,8 +480,4 @@ function uploadJSON() {
 function downloadJSON() {
 	// Save the data object as a string into a file
 	saveTextAsFile(2);
-}
-
-function getActiveTab() {
-	console.log("activeTab="+activeTab);
 }
